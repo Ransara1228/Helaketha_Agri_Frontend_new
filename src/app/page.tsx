@@ -31,10 +31,10 @@ export default function Home() {
           Agricultural Excellence Platform
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
           <Link
             href="/farmers"
-            className="group relative bg-gradient-to-r from-green-500 via-emerald-500 to-teal-500 text-white px-8 py-6 rounded-2xl shadow-2xl hover:shadow-green-500/50 transition-all duration-300 transform hover:scale-110 hover:-translate-y-2 font-extrabold text-lg flex flex-col items-center justify-center gap-3 overflow-hidden"
+            className="group relative bg-gradient-to-r from-green-500 via-emerald-500 to-teal-500 text-white px-6 py-6 rounded-2xl shadow-2xl hover:shadow-green-500/50 transition-all duration-300 transform hover:scale-110 hover:-translate-y-2 font-extrabold text-base flex flex-col items-center justify-center gap-3 overflow-hidden"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/30 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
             <svg className="relative z-10 w-8 h-8 transform group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -45,7 +45,7 @@ export default function Home() {
           </Link>
           <Link
             href="/tractor-drivers"
-            className="group relative bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 text-white px-8 py-6 rounded-2xl shadow-2xl hover:shadow-emerald-500/50 transition-all duration-300 transform hover:scale-110 hover:-translate-y-2 font-extrabold text-lg flex flex-col items-center justify-center gap-3 overflow-hidden"
+            className="group relative bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 text-white px-6 py-6 rounded-2xl shadow-2xl hover:shadow-emerald-500/50 transition-all duration-300 transform hover:scale-110 hover:-translate-y-2 font-extrabold text-base flex flex-col items-center justify-center gap-3 overflow-hidden"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/30 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
             <svg className="relative z-10 w-8 h-8 transform group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -56,7 +56,7 @@ export default function Home() {
           </Link>
           <Link
             href="/harvester-drivers"
-            className="group relative bg-gradient-to-r from-teal-500 via-cyan-500 to-blue-500 text-white px-8 py-6 rounded-2xl shadow-2xl hover:shadow-teal-500/50 transition-all duration-300 transform hover:scale-110 hover:-translate-y-2 font-extrabold text-lg flex flex-col items-center justify-center gap-3 overflow-hidden"
+            className="group relative bg-gradient-to-r from-teal-500 via-cyan-500 to-blue-500 text-white px-6 py-6 rounded-2xl shadow-2xl hover:shadow-teal-500/50 transition-all duration-300 transform hover:scale-110 hover:-translate-y-2 font-extrabold text-base flex flex-col items-center justify-center gap-3 overflow-hidden"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/30 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
             <svg className="relative z-10 w-8 h-8 transform group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -64,6 +64,17 @@ export default function Home() {
             </svg>
             <span className="relative z-10 text-center">Manage Harvester Drivers</span>
             <div className="absolute inset-0 bg-gradient-to-r from-teal-400 to-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
+          </Link>
+          <Link
+            href="/fertilizer-suppliers"
+            className="group relative bg-gradient-to-r from-amber-500 via-orange-500 to-yellow-500 text-white px-6 py-6 rounded-2xl shadow-2xl hover:shadow-amber-500/50 transition-all duration-300 transform hover:scale-110 hover:-translate-y-2 font-extrabold text-base flex flex-col items-center justify-center gap-3 overflow-hidden"
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/30 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
+            <svg className="relative z-10 w-8 h-8 transform group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+            </svg>
+            <span className="relative z-10 text-center">Manage Fertilizer Suppliers</span>
+            <div className="absolute inset-0 bg-gradient-to-r from-amber-400 to-orange-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
           </Link>
         </div>
       </div>
