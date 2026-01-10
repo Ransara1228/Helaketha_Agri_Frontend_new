@@ -31,7 +31,7 @@ export default function Home() {
           Agricultural Excellence Platform
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
           <Link
             href="/farmers"
             className="group relative bg-gradient-to-r from-green-500 via-emerald-500 to-teal-500 text-white px-6 py-6 rounded-2xl shadow-2xl hover:shadow-green-500/50 transition-all duration-300 transform hover:scale-110 hover:-translate-y-2 font-extrabold text-base flex flex-col items-center justify-center gap-3 overflow-hidden"
@@ -75,6 +75,17 @@ export default function Home() {
             </svg>
             <span className="relative z-10 text-center">Manage Fertilizer Suppliers</span>
             <div className="absolute inset-0 bg-gradient-to-r from-amber-400 to-orange-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
+          </Link>
+          <Link
+            href="/provider-schedules"
+            className="group relative bg-gradient-to-r from-purple-500 via-indigo-500 to-pink-500 text-white px-6 py-6 rounded-2xl shadow-2xl hover:shadow-purple-500/50 transition-all duration-300 transform hover:scale-110 hover:-translate-y-2 font-extrabold text-base flex flex-col items-center justify-center gap-3 overflow-hidden"
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/30 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
+            <svg className="relative z-10 w-8 h-8 transform group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            <span className="relative z-10 text-center">Manage Provider Schedules</span>
+            <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-indigo-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
           </Link>
         </div>
       </div>
