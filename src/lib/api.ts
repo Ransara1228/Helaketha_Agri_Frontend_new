@@ -18,7 +18,8 @@ export const farmerApi = {
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
-      throw new Error(errorData.error || `Failed to fetch farmers: ${response.statusText}`);
+      const errorMessage = errorData.error || errorData.message || `Failed to fetch farmers: ${response.status} ${response.statusText}`;
+      throw new Error(errorMessage);
     }
 
     return response.json();
