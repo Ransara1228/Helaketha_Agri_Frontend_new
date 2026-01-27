@@ -52,7 +52,9 @@ export const harvesterDriverApi = {
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
-      throw new Error(errorData.error || errorData.message || `Failed to create harvester driver: ${response.statusText}`);
+      // Updated to display specific backend messages (e.g. "User name already exists")
+      const errorMessage = errorData.message || errorData.error || `Failed to create harvester driver: ${response.statusText}`;
+      throw new Error(errorMessage);
     }
 
     return response.json();
@@ -91,4 +93,3 @@ export const harvesterDriverApi = {
     }
   },
 };
-
