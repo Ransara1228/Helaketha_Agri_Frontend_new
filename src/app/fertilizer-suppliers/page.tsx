@@ -60,6 +60,7 @@ export default function FertilizerSuppliersPage() {
         (supplier) =>
           supplier.name.toLowerCase().includes(query) ||
           supplier.phone.includes(query) ||
+          (supplier.email && supplier.email.toLowerCase().includes(query)) ||
           supplier.username.toLowerCase().includes(query) ||
           supplier.fertilizerType.toLowerCase().includes(query) ||
           String(supplier.stockQuantityLiters).includes(query) ||
@@ -313,7 +314,7 @@ export default function FertilizerSuppliersPage() {
                   </div>
                   <input
                     type="text"
-                    placeholder="Search fertilizer suppliers by name, phone, username, fertilizer type, stock quantity, or price..."
+                    placeholder="Search fertilizer suppliers by name, phone, email, username, fertilizer type, stock quantity, or price..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="block w-full pl-14 pr-4 py-4 border-2 border-gray-200 rounded-xl leading-5 bg-white/80 backdrop-blur-sm placeholder-gray-400 focus:outline-none focus:border-green-500 focus:bg-white focus:ring-4 focus:ring-green-200 transition-all duration-300 text-sm font-medium shadow-sm hover:shadow-md"
@@ -478,7 +479,7 @@ export default function FertilizerSuppliersPage() {
                   <table className="min-w-full divide-y divide-gray-200">
                     <thead className="bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600 relative">
                       <tr>
-                        {(['supplierId', 'name', 'phone', 'fertilizerType', 'stockQuantityLiters', 'pricePerLiter', 'username'] as const).map((field) => (
+                        {(['supplierId', 'name', 'phone', 'email', 'fertilizerType', 'stockQuantityLiters', 'pricePerLiter', 'username'] as const).map((field) => (
                           <th
                             key={field}
                             onClick={() => handleSort(field)}
@@ -532,6 +533,14 @@ export default function FertilizerSuppliersPage() {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                               </svg>
                               {supplier.phone}
+                            </div>
+                          </td>
+                          <td className="px-6 py-5 whitespace-nowrap">
+                            <div className="flex items-center gap-2 text-sm text-gray-700 font-medium">
+                              <svg className="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                              </svg>
+                              {supplier.email || 'N/A'}
                             </div>
                           </td>
                           <td className="px-6 py-5 whitespace-nowrap">
@@ -632,6 +641,14 @@ export default function FertilizerSuppliersPage() {
                           </div>
                           <span className="text-sm font-semibold text-gray-700">{supplier.phone}</span>
                         </div>
+                        <div className="flex items-center gap-3 p-3 rounded-xl bg-gray-50/50 hover:bg-blue-50/50 transition-colors duration-200">
+                          <div className="p-2 bg-blue-100 rounded-lg">
+                            <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
+                          </div>
+                          <span className="text-sm font-semibold text-gray-700">{supplier.email || 'N/A'}</span>
+                        </div>
                         <div className="p-3 rounded-xl bg-gray-50/50 hover:bg-amber-50/50 transition-colors duration-200">
                           <div className="flex items-center gap-2 mb-1">
                             <svg className="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -706,4 +723,3 @@ export default function FertilizerSuppliersPage() {
     </div>
   );
 }
-

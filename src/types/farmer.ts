@@ -6,7 +6,7 @@ export interface Farmer {
   address: string;
   nic: string;
   username: string;
-  password: string;
+  keycloakUserId?: string;
 }
 
 export interface FarmerFormData {
@@ -16,6 +16,5 @@ export interface FarmerFormData {
   address: string;
   nic: string;
   username: string;
-  password: string;
 }
 
