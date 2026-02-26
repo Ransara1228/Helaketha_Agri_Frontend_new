@@ -511,7 +511,7 @@ export default function ServicesPage() {
                             className="px-6 py-5 text-left text-xs font-extrabold text-white uppercase tracking-wider cursor-pointer hover:bg-white/20 transition-all duration-300 relative group"
                           >
                             <div className="flex items-center gap-2">
-                              {field === 'bookingId' ? 'ID' : field === 'farmerId' ? 'Farmer ID' : field === 'serviceType' ? 'Service Type' : field === 'providerId' ? 'Provider ID' : field === 'bookingDate' ? 'Date' : field === 'bookingTime' ? 'Time' : field === 'totalCost' ? 'Cost' : field === 'status' ? 'Status' : field.charAt(0).toUpperCase() + field.slice(1)}
+                              {field === 'bookingId' ? 'ID' : field === 'farmerId' ? 'Farmer ID' : field === 'serviceType' ? 'Service Type' : field === 'providerId' ? 'Provider ID' : field === 'bookingDate' ? 'Date' : field === 'bookingTime' ? 'Time' : field === 'totalCost' ? 'Cost' : field === 'status' ? 'Status' : ''}
                               {sortField === field && (
                                 <svg className={`w-5 h-5 transition-transform duration-300 ${sortDirection === 'desc' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 15l7-7 7 7" />
