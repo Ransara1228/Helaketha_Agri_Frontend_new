@@ -1,24 +1,35 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '../../auth/[...nextauth]/route';
 
 // Backend API URL - use environment variable or default
 const BACKEND_API_URL = process.env.BACKEND_API_URL || process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8080/api';
+
+async function getAuthHeaders() {
+  const session = await getServerSession(authOptions);
+  const accessToken = (session as any)?.accessToken || (session as any)?.idToken;
+  return {
+    'Content-Type': 'application/json',
+    ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
+  };
+}
 
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const headers = await getAuthHeaders();
     const { id } = await params;
     const response = await fetch(`${BACKEND_API_URL}/tractor-drivers/${id}`, {
       method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers,
     });
 
     if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
       return NextResponse.json(
-        { error: 'Failed to fetch tractor driver' },
+        { error: errorData.message || errorData.error || 'Failed to fetch tractor driver' },
         { status: response.status }
       );
     }
@@ -39,13 +50,12 @@ export async function PUT(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const headers = await getAuthHeaders();
     const { id } = await params;
     const body = await request.json();
     const response = await fetch(`${BACKEND_API_URL}/tractor-drivers/${id}`, {
       method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers,
       body: JSON.stringify(body),
     });
 
@@ -73,12 +83,11 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const headers = await getAuthHeaders();
     const { id } = await params;
     const response = await fetch(`${BACKEND_API_URL}/tractor-drivers/${id}`, {
       method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers,
     });
 
     if (!response.ok) {

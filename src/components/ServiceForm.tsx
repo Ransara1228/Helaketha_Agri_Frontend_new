@@ -18,10 +18,8 @@ const SERVICE_TYPES = [
 
 const STATUS_OPTIONS = [
   'Pending',
-  'Confirmed',
-  'In Progress',
+  'Accepted',
   'Completed',
-  'Cancelled'
 ];
 
 export default function ServiceForm({ service, onSubmit, onCancel, isLoading }: ServiceFormProps) {
