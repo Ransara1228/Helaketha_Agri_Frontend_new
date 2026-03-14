@@ -1,24 +1,39 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '../../auth/[...nextauth]/route';
+import { getToken } from 'next-auth/jwt';
 
 // Backend API URL - use environment variable or default
 const BACKEND_API_URL = process.env.BACKEND_API_URL || process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8080/api';
+
+async function getAuthHeaders(request: NextRequest) {
+  const jwtToken = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
+  const jwtAccessToken = (jwtToken as any)?.accessToken || (jwtToken as any)?.idToken;
+  const session = await getServerSession(authOptions);
+  const sessionAccessToken = (session as any)?.accessToken || (session as any)?.idToken;
+  const accessToken = jwtAccessToken || sessionAccessToken;
+  return {
+    'Content-Type': 'application/json',
+    ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
+  };
+}
 
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const headers = await getAuthHeaders(request);
     const { id } = await params;
     const response = await fetch(`${BACKEND_API_URL}/services/${id}`, {
       method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers,
     });
 
     if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
       return NextResponse.json(
-        { error: 'Failed to fetch service' },
+        { error: errorData.message || errorData.error || 'Failed to fetch service' },
         { status: response.status }
       );
     }
@@ -39,13 +54,12 @@ export async function PUT(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const headers = await getAuthHeaders(request);
     const { id } = await params;
     const body = await request.json();
     const response = await fetch(`${BACKEND_API_URL}/services/${id}`, {
       method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers,
       body: JSON.stringify(body),
     });
 
@@ -73,17 +87,17 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const headers = await getAuthHeaders(request);
     const { id } = await params;
     const response = await fetch(`${BACKEND_API_URL}/services/${id}`, {
       method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers,
     });
 
     if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
       return NextResponse.json(
-        { error: 'Failed to delete service' },
+        { error: errorData.message || errorData.error || 'Failed to delete service' },
         { status: response.status }
       );
     }
