@@ -18,7 +18,6 @@ export default function FarmerForm({ farmer, onSubmit, onCancel, isLoading }: Fa
     address: farmer?.address || '',
     nic: farmer?.nic || '',
     username: farmer?.username || '',
-    password: farmer?.password || '',
   });
 
   const [errors, setErrors] = useState<Partial<Record<keyof FarmerFormData, string>>>({});
@@ -45,9 +44,6 @@ export default function FarmerForm({ farmer, onSubmit, onCancel, isLoading }: Fa
     }
     if (!formData.username.trim()) {
       newErrors.username = 'Username is required';
-    }
-    if (!formData.password.trim()) {
-      newErrors.password = 'Password is required';
     }
 
     setErrors(newErrors);
@@ -176,21 +172,11 @@ export default function FarmerForm({ farmer, onSubmit, onCancel, isLoading }: Fa
         {errors.username && <p className="mt-1 text-sm text-red-600">{errors.username}</p>}
       </div>
 
-      <div>
-        <label htmlFor="password" className="block text-sm font-semibold text-gray-700 mb-2">
-          Password <span className="text-green-600">*</span>
-        </label>
-        <input
-          type="password"
-          id="password"
-          value={formData.password}
-          onChange={(e) => handleChange('password', e.target.value)}
-          className={`w-full px-4 py-3 border rounded-lg shadow-sm bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 ${
-            errors.password ? 'border-red-500 focus:ring-red-500' : 'border-gray-300'
-          }`}
-          disabled={isLoading}
-        />
-        {errors.password && <p className="mt-1 text-sm text-red-600">{errors.password}</p>}
+      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+        <p className="text-sm text-blue-800">
+          <strong>Note:</strong> A temporary password will be automatically generated in Keycloak. 
+          The user will be required to change it on first login.
+        </p>
       </div>
 
       <div className="flex gap-4 pt-6 border-t border-gray-200">

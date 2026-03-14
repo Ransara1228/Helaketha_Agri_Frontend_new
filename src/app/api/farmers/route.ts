@@ -15,8 +15,16 @@ export async function GET(request: NextRequest) {
     });
 
     if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      const errorMessage = errorData.message || errorData.error || `Failed to fetch farmers: ${response.status} ${response.statusText}`;
+      console.error('Backend API error:', {
+        status: response.status,
+        statusText: response.statusText,
+        errorData,
+        url: `${BACKEND_API_URL}/farmers`
+      });
       return NextResponse.json(
-        { error: 'Failed to fetch farmers' },
+        { error: errorMessage },
         { status: response.status }
       );
     }
@@ -24,9 +32,23 @@ export async function GET(request: NextRequest) {
     const data = await response.json();
     return NextResponse.json(data);
   } catch (error) {
-    console.error('Error fetching farmers:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    console.error('Error fetching farmers:', {
+      error: errorMessage,
+      url: `${BACKEND_API_URL}/farmers`,
+      backendUrl: BACKEND_API_URL
+    });
+    
+    // Check if it's a connection error
+    if (errorMessage.includes('fetch failed') || errorMessage.includes('ECONNREFUSED')) {
+      return NextResponse.json(
+        { error: `Cannot connect to backend server at ${BACKEND_API_URL}. Please ensure the backend is running.` },
+        { status: 503 }
+      );
+    }
+    
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { error: `Internal server error: ${errorMessage}` },
       { status: 500 }
     );
   }
