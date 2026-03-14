@@ -16,8 +16,21 @@ export default function Navigation() {
             <Link href="/" className="flex items-center gap-3 group">
               <div className="relative p-3 bg-gradient-to-br from-green-500 via-emerald-500 to-teal-500 rounded-xl group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-lg group-hover:shadow-green-500/50">
                 <div className="absolute inset-0 bg-gradient-to-br from-green-400 to-emerald-600 rounded-xl opacity-75 blur-xl group-hover:opacity-100 transition-opacity"></div>
-                <svg className="relative w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                <svg className="relative w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
+                  {/* Central larger leaf pointing up */}
+                  <path d="M12 2 Q10 4 11 6 Q12 8 13 6 Q14 4 12 2 M12 4 L12 7" stroke="currentColor" strokeWidth="1.5" fill="none"/>
+                  <path d="M12 2 Q10 4 11 6 Q12 8 13 6 Q14 4 12 2" fill="currentColor" opacity="0.9"/>
+                  {/* Left smaller leaf */}
+                  <path d="M8 5 Q7 6 7.5 7.5 Q8 9 9 8 Q9.5 7 8 5" fill="currentColor" opacity="0.7"/>
+                  {/* Right smaller leaf */}
+                  <path d="M16 5 Q17 6 16.5 7.5 Q16 9 15 8 Q14.5 7 16 5" fill="currentColor" opacity="0.7"/>
+                  {/* Signal Tower - vertical structure with base */}
+                  <rect x="11" y="9" width="2" height="5" fill="currentColor"/>
+                  <rect x="9.5" y="14" width="5" height="1.5" fill="currentColor"/>
+                  {/* Signal waves - three curved lines on each side radiating from tower top */}
+                  <path d="M6 11 Q12 9.5 18 11" stroke="currentColor" strokeWidth="1.2" fill="none" opacity="0.7"/>
+                  <path d="M5 13 Q12 11.5 19 13" stroke="currentColor" strokeWidth="1.2" fill="none" opacity="0.5"/>
+                  <path d="M4 15 Q12 13.5 20 15" stroke="currentColor" strokeWidth="1.2" fill="none" opacity="0.3"/>
                 </svg>
               </div>
               <div>
@@ -79,6 +92,45 @@ export default function Navigation() {
                   <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent"></div>
                 )}
                 <span className="relative">Harvester Drivers</span>
+              </Link>
+              <Link
+                href="/fertilizer-suppliers"
+                className={`px-5 py-2.5 rounded-lg font-semibold text-sm transition-all duration-300 relative overflow-hidden ${
+                  isActive('/fertilizer-suppliers')
+                    ? 'bg-gradient-to-r from-green-500 to-emerald-500 text-white shadow-lg shadow-green-500/30'
+                    : 'text-gray-700 hover:text-green-600 hover:bg-green-50'
+                }`}
+              >
+                {isActive('/fertilizer-suppliers') && (
+                  <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent"></div>
+                )}
+                <span className="relative">Fertilizer Suppliers</span>
+              </Link>
+              <Link
+                href="/provider-schedules"
+                className={`px-5 py-2.5 rounded-lg font-semibold text-sm transition-all duration-300 relative overflow-hidden ${
+                  isActive('/provider-schedules')
+                    ? 'bg-gradient-to-r from-green-500 to-emerald-500 text-white shadow-lg shadow-green-500/30'
+                    : 'text-gray-700 hover:text-green-600 hover:bg-green-50'
+                }`}
+              >
+                {isActive('/provider-schedules') && (
+                  <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent"></div>
+                )}
+                <span className="relative">Provider Schedule</span>
+              </Link>
+              <Link
+                href="/services"
+                className={`px-5 py-2.5 rounded-lg font-semibold text-sm transition-all duration-300 relative overflow-hidden ${
+                  isActive('/services')
+                    ? 'bg-gradient-to-r from-green-500 to-emerald-500 text-white shadow-lg shadow-green-500/30'
+                    : 'text-gray-700 hover:text-green-600 hover:bg-green-50'
+                }`}
+              >
+                {isActive('/services') && (
+                  <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent"></div>
+                )}
+                <span className="relative">Service Bookings</span>
               </Link>
             </div>
           </div>
