@@ -54,6 +54,32 @@ export default function Navigation() {
                 )}
                 <span className="relative">Farmers</span>
               </Link>
+              <Link
+                href="/tractor-drivers"
+                className={`px-5 py-2.5 rounded-lg font-semibold text-sm transition-all duration-300 relative overflow-hidden ${
+                  isActive('/tractor-drivers')
+                    ? 'bg-gradient-to-r from-green-500 to-emerald-500 text-white shadow-lg shadow-green-500/30'
+                    : 'text-gray-700 hover:text-green-600 hover:bg-green-50'
+                }`}
+              >
+                {isActive('/tractor-drivers') && (
+                  <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent"></div>
+                )}
+                <span className="relative">Tractor Drivers</span>
+              </Link>
+              <Link
+                href="/harvester-drivers"
+                className={`px-5 py-2.5 rounded-lg font-semibold text-sm transition-all duration-300 relative overflow-hidden ${
+                  isActive('/harvester-drivers')
+                    ? 'bg-gradient-to-r from-green-500 to-emerald-500 text-white shadow-lg shadow-green-500/30'
+                    : 'text-gray-700 hover:text-green-600 hover:bg-green-50'
+                }`}
+              >
+                {isActive('/harvester-drivers') && (
+                  <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent"></div>
+                )}
+                <span className="relative">Harvester Drivers</span>
+              </Link>
             </div>
           </div>
           <div className="flex items-center gap-4">
