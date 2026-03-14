@@ -1,7 +1,6 @@
 import { TractorDriver, TractorDriverFormData } from '@/types/tractorDriver';
 
 // Use Next.js API routes as proxy to avoid CORS issues
-// If you want to call backend directly, change this to your backend URL
 const API_BASE_URL = process.env.NEXT_PUBLIC_USE_PROXY !== 'false' 
   ? '/api' 
   : (process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8080/api');
@@ -92,4 +91,3 @@ export const tractorDriverApi = {
     }
   },
 };
-
