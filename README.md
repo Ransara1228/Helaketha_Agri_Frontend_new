@@ -60,34 +60,28 @@ Upload your screenshots into this folder:
 ### 2) Keycloak Login
 ![Keycloak Login](docs/screenshots/03-keycloak-login.png)
 
-### 3) Project Overview
-![Project Overview](docs/screenshots/01-project-overview.png)
-
-### 4) Tech Stack
-![Tech Stack](docs/screenshots/02-tech-stack.png)
-
-### 5) Admin - Service Bookings
+### 3) Admin - Service Bookings
 ![Admin Service Bookings](docs/screenshots/04-admin-service-bookings.png)
 
-### 6) Farmer - Booking Details
+### 4) Farmer - Booking Details
 ![Farmer Booking Details](docs/screenshots/05-farmer-booking-table.png)
 
-### 7) Farmers Management
+### 5) Farmers Management
 ![Farmers Management](docs/screenshots/08-farmers-management.png)
 
-### 8) Admin - Home Dashboard
+### 6) Admin - Home Dashboard
 ![Admin Home Dashboard](docs/screenshots/06-admin-home-dashboard.png)
 
-### 9) Fertilizer Supplier Dashboard
+### 7) Fertilizer Supplier Dashboard
 ![Fertilizer Supplier Dashboard](docs/screenshots/07-fertilizer-provider-dashboard.png)
 
-### 10) Farmer Dashboard
+### 8) Farmer Dashboard
 ![Farmer Dashboard](docs/screenshots/09-farmer-dashboard.png)
 
-### 11) Tractor Driver Dashboard
+### 9) Tractor Driver Dashboard
 ![Tractor Driver Dashboard](docs/screenshots/10-tractor-provider-dashboard.png)
 
-### 12) Harvester Driver Dashboard
+### 10) Harvester Driver Dashboard
 ![Harvester Driver Dashboard](docs/screenshots/11-harvester-provider-dashboard.png)
 
 ## Repository
