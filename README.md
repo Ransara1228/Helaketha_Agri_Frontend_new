@@ -52,58 +52,43 @@ Upload your screenshots into this folder:
 
 - `docs/screenshots/`
 
-Use these exact file names (recommended):
-
-1. `01-project-overview.png`
-2. `02-tech-stack.png`
-3. `03-keycloak-login.png`
-4. `04-admin-service-bookings.png`
-5. `05-farmer-booking-table.png`
-6. `06-admin-home-dashboard.png`
-7. `07-fertilizer-provider-dashboard.png`
-8. `08-farmers-management.png`
-9. `09-farmer-dashboard.png`
-10. `10-tractor-provider-dashboard.png`
-11. `11-harvester-provider-dashboard.png`
-12. `12-landing-page.png`
-
 ## Project Screenshots
 
-### 1) Project Overview
-![Project Overview](docs/screenshots/01-project-overview.png)
+### 1) Landing Page
+![Landing Page](docs/screenshots/12-landing-page.png)
 
-### 2) Tech Stack
-![Tech Stack](docs/screenshots/02-tech-stack.png)
-
-### 3) Keycloak Login
+### 2) Keycloak Login
 ![Keycloak Login](docs/screenshots/03-keycloak-login.png)
 
-### 4) Admin - Service Bookings
+### 3) Project Overview
+![Project Overview](docs/screenshots/01-project-overview.png)
+
+### 4) Tech Stack
+![Tech Stack](docs/screenshots/02-tech-stack.png)
+
+### 5) Admin - Service Bookings
 ![Admin Service Bookings](docs/screenshots/04-admin-service-bookings.png)
 
-### 5) Farmer - Booking Details
+### 6) Farmer - Booking Details
 ![Farmer Booking Details](docs/screenshots/05-farmer-booking-table.png)
 
-### 6) Admin - Home Dashboard
-![Admin Home Dashboard](docs/screenshots/06-admin-home-dashboard.png)
-
-### 7) Fertilizer Supplier Dashboard
-![Fertilizer Supplier Dashboard](docs/screenshots/07-fertilizer-provider-dashboard.png)
-
-### 8) Farmers Management
+### 7) Farmers Management
 ![Farmers Management](docs/screenshots/08-farmers-management.png)
 
-### 9) Farmer Dashboard
+### 8) Admin - Home Dashboard
+![Admin Home Dashboard](docs/screenshots/06-admin-home-dashboard.png)
+
+### 9) Fertilizer Supplier Dashboard
+![Fertilizer Supplier Dashboard](docs/screenshots/07-fertilizer-provider-dashboard.png)
+
+### 10) Farmer Dashboard
 ![Farmer Dashboard](docs/screenshots/09-farmer-dashboard.png)
 
-### 10) Tractor Driver Dashboard
+### 11) Tractor Driver Dashboard
 ![Tractor Driver Dashboard](docs/screenshots/10-tractor-provider-dashboard.png)
 
-### 11) Harvester Driver Dashboard
+### 12) Harvester Driver Dashboard
 ![Harvester Driver Dashboard](docs/screenshots/11-harvester-provider-dashboard.png)
-
-### 12) Landing Page
-![Landing Page](docs/screenshots/12-landing-page.png)
 
 ## Repository
 
