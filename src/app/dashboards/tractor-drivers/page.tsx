@@ -50,11 +50,14 @@ function toText(value: unknown, fallback = "N/A"): string {
   return fallback;
 }
 
-async function fetchList(path: string): Promise<any[]> {
+async function fetchList(path: string, accessToken?: string): Promise<any[]> {
   try {
     const response = await fetch(`${BACKEND_API_URL}/${path}`, {
       method: "GET",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
+      },
       cache: "no-store",
     });
     if (!response.ok) return [];
@@ -101,14 +104,24 @@ function getIdentityHints(session: any): Set<string> {
   if (name) hints.add(name);
   if (email.includes("@")) hints.add(email.split("@")[0]);
 
-  const tokenPayload = decodeJwtPayload((session as any)?.idToken);
+  const idTokenPayload = decodeJwtPayload((session as any)?.idToken);
+  const accessTokenPayload = decodeJwtPayload((session as any)?.accessToken);
+  const tokenPayload = idTokenPayload ?? accessTokenPayload ?? null;
   const preferredUsername = String(tokenPayload?.preferred_username ?? "").trim().toLowerCase();
   const tokenEmail = String(tokenPayload?.email ?? "").trim().toLowerCase();
   const tokenName = String(tokenPayload?.name ?? "").trim().toLowerCase();
+  const tokenSub = String(tokenPayload?.sub ?? "").trim().toLowerCase();
+  const givenName = String(tokenPayload?.given_name ?? "").trim().toLowerCase();
+  const familyName = String(tokenPayload?.family_name ?? "").trim().toLowerCase();
+  const fullNameFromParts = `${givenName} ${familyName}`.trim();
 
   if (preferredUsername) hints.add(preferredUsername);
   if (tokenEmail) hints.add(tokenEmail);
   if (tokenName) hints.add(tokenName);
+  if (tokenSub) hints.add(tokenSub);
+  if (givenName) hints.add(givenName);
+  if (familyName) hints.add(familyName);
+  if (fullNameFromParts) hints.add(fullNameFromParts);
   if (tokenEmail.includes("@")) hints.add(tokenEmail.split("@")[0]);
 
   return hints;
@@ -138,10 +151,11 @@ export default async function TractorDriverDashboardPage() {
   if (!session) redirect("/api/auth/signin");
   if (!isTractorDriver(session)) redirect("/login");
 
+  const accessToken = String((session as any)?.accessToken ?? (session as any)?.idToken ?? "");
   const identityHints = getIdentityHints(session);
   const [driversRaw, servicesRaw] = await Promise.all([
-    fetchList("tractor-drivers"),
-    fetchList("services"),
+    fetchList("tractor-drivers", accessToken),
+    fetchList("services", accessToken),
   ]);
 
   const drivers: TractorDriverRow[] = driversRaw.map((item) => ({
