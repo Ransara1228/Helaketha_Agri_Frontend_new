@@ -18,6 +18,23 @@ async function getAuthHeaders(request: NextRequest) {
   };
 }
 
+async function parseBackendError(response: Response, fallback: string) {
+  const rawText = await response.text().catch(() => '');
+  if (!rawText) return fallback;
+
+  try {
+    const data = JSON.parse(rawText);
+    return (
+      data?.message ||
+      data?.error ||
+      (Array.isArray(data?.details) ? data.details.join(', ') : undefined) ||
+      fallback
+    );
+  } catch {
+    return rawText || fallback;
+  }
+}
+
 // Proxy route to handle CORS and API calls
 export async function GET(request: NextRequest) {
   try {
@@ -29,9 +46,9 @@ export async function GET(request: NextRequest) {
     });
 
     if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
+      const errorMessage = await parseBackendError(response, 'Failed to fetch harvester drivers');
       return NextResponse.json(
-        { error: errorData.message || errorData.error || 'Failed to fetch harvester drivers' },
+        { error: errorMessage },
         { status: response.status }
       );
     }
@@ -58,9 +75,9 @@ export async function POST(request: NextRequest) {
     });
 
     if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
+      const errorMessage = await parseBackendError(response, 'Failed to create harvester driver');
       return NextResponse.json(
-        { error: errorData.message || 'Failed to create harvester driver' },
+        { error: errorMessage },
         { status: response.status }
       );
     }

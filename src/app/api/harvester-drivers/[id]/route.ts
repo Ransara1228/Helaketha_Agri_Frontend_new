@@ -18,6 +18,23 @@ async function getAuthHeaders(request: NextRequest) {
   };
 }
 
+async function parseBackendError(response: Response, fallback: string) {
+  const rawText = await response.text().catch(() => '');
+  if (!rawText) return fallback;
+
+  try {
+    const data = JSON.parse(rawText);
+    return (
+      data?.message ||
+      data?.error ||
+      (Array.isArray(data?.details) ? data.details.join(', ') : undefined) ||
+      fallback
+    );
+  } catch {
+    return rawText || fallback;
+  }
+}
+
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
@@ -31,9 +48,9 @@ export async function GET(
     });
 
     if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
+      const errorMessage = await parseBackendError(response, 'Failed to fetch harvester driver');
       return NextResponse.json(
-        { error: errorData.message || errorData.error || 'Failed to fetch harvester driver' },
+        { error: errorMessage },
         { status: response.status }
       );
     }
@@ -64,9 +81,9 @@ export async function PUT(
     });
 
     if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
+      const errorMessage = await parseBackendError(response, 'Failed to update harvester driver');
       return NextResponse.json(
-        { error: errorData.message || 'Failed to update harvester driver' },
+        { error: errorMessage },
         { status: response.status }
       );
     }
@@ -95,8 +112,9 @@ export async function DELETE(
     });
 
     if (!response.ok) {
+      const errorMessage = await parseBackendError(response, 'Failed to delete harvester driver');
       return NextResponse.json(
-        { error: 'Failed to delete harvester driver' },
+        { error: errorMessage },
         { status: response.status }
       );
     }
