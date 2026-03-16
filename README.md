@@ -46,12 +46,6 @@ The platform includes admin management modules, farmer booking flows, provider d
 - JWT
 - Role-Based Access Control (RBAC)
 
-## Screenshot Setup (Required)
-
-Upload your screenshots into this folder:
-
-- `docs/screenshots/`
-
 ## Project Screenshots
 
 ### 1) Landing Page
