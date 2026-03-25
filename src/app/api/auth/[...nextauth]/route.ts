@@ -49,7 +49,6 @@ async function refreshKeycloakToken(token: any): Promise<any> {
 
 export const authOptions: AuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
-  trustHost: true,
   session: {
     strategy: "jwt",
     maxAge: 60 * 60, // 1 hour - short session, no long-term cookie storage
@@ -151,6 +150,8 @@ export const authOptions: AuthOptions = {
     },
   },
 };
+
+export const runtime = "nodejs";
 
 const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };
