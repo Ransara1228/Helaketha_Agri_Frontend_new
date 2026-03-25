@@ -1,6 +1,11 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { getToken } from "next-auth/jwt";
+import {
+  tokenIsFertilizerSupplier,
+  tokenIsHarvesterDriver,
+  tokenIsTractorDriver,
+} from "@/lib/keycloakRoleMatch";
 
 function normalizeRoles(token: any): string[] {
   const roles = (token?.roles as string[] | undefined) ?? [];
@@ -20,18 +25,15 @@ function isFarmer(token: any): boolean {
 }
 
 function isTractorDriver(token: any): boolean {
-  const roles = normalizeRoles(token);
-  return roles.includes("tractor_driver") || roles.includes("tractor driver") || roles.includes("tractordriver");
+  return tokenIsTractorDriver(token);
 }
 
 function isHarvesterDriver(token: any): boolean {
-  const roles = normalizeRoles(token);
-  return roles.includes("harvester_driver") || roles.includes("harvester driver") || roles.includes("harvesterdriver");
+  return tokenIsHarvesterDriver(token);
 }
 
 function isFertilizerSupplier(token: any): boolean {
-  const roles = normalizeRoles(token);
-  return roles.includes("fertilizer_supplier") || roles.includes("fertilizer supplier") || roles.includes("fertilizersupplier");
+  return tokenIsFertilizerSupplier(token);
 }
 
 const USER_DASHBOARDS = {

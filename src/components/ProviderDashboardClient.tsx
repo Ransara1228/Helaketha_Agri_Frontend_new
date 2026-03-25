@@ -54,11 +54,45 @@ function statusClass(status: string): string {
   return 'bg-slate-100 text-slate-700 border-slate-200';
 }
 
+function unwrapServicesPayload(data: unknown): unknown[] {
+  if (Array.isArray(data)) return data;
+  if (data && typeof data === 'object') {
+    const o = data as Record<string, unknown>;
+    if (Array.isArray(o.content)) return o.content;
+    if (Array.isArray(o.data)) return o.data;
+    if (Array.isArray(o.items)) return o.items;
+  }
+  return [];
+}
+
+function readServiceProviderId(row: unknown): number {
+  if (!row || typeof row !== 'object') return 0;
+  const o = row as Record<string, unknown>;
+  const keys = [
+    'providerId',
+    'provider_id',
+    'harvesterDriverId',
+    'harvester_driver_id',
+    'tractorDriverId',
+    'tractor_driver_id',
+    'supplierId',
+    'supplier_id',
+  ];
+  for (const k of keys) {
+    const v = o[k];
+    if (typeof v === 'number' && Number.isFinite(v)) return v;
+    if (typeof v === 'string' && v.trim() !== '') {
+      const n = Number(v);
+      if (Number.isFinite(n)) return n;
+    }
+  }
+  return 0;
+}
+
 function getModeMeta(mode: ProviderMode) {
   if (mode === 'tractor') {
     return {
       label: 'Tractor Driver',
-      serviceKey: 'TRACTOR',
       profileEndpoint: '/api/tractor-drivers',
       priceFieldLabel: 'Price / Acre (LKR)',
       accent: 'from-emerald-600 to-teal-600',
@@ -68,7 +102,6 @@ function getModeMeta(mode: ProviderMode) {
   if (mode === 'harvester') {
     return {
       label: 'Harvester Driver',
-      serviceKey: 'HARVEST',
       profileEndpoint: '/api/harvester-drivers',
       priceFieldLabel: 'Price / Acre (LKR)',
       accent: 'from-cyan-600 to-blue-600',
@@ -77,12 +110,18 @@ function getModeMeta(mode: ProviderMode) {
   }
   return {
     label: 'Fertilizer Supplier',
-    serviceKey: 'FERTILIZER',
     profileEndpoint: '/api/fertilizer-suppliers',
     priceFieldLabel: 'Price / Liter (LKR)',
     accent: 'from-amber-600 to-orange-600',
     softAccent: 'from-amber-50 to-orange-50',
   };
+}
+
+function bookingServiceMatchesMode(mode: ProviderMode, serviceType: string): boolean {
+  const v = (serviceType || '').toUpperCase();
+  if (mode === 'tractor') return v.includes('TRACTOR');
+  if (mode === 'harvester') return v.includes('HARVEST') || v.includes('HARVESTER');
+  return v.includes('FERTILIZER') || v.includes('FERTILISER');
 }
 
 export default function ProviderDashboardClient({
@@ -128,19 +167,25 @@ export default function ProviderDashboardClient({
       if (!response.ok) {
         throw new Error('Failed to load bookings');
       }
-      const rows = await response.json();
-      const normalized = (Array.isArray(rows) ? rows : [])
-        .map((row) => ({
-          bookingId: Number(row?.bookingId ?? row?.id ?? 0),
-          farmerId: Number(row?.farmerId ?? 0),
-          providerId: Number(row?.providerId ?? 0),
-          serviceType: String(row?.serviceType ?? ''),
-          bookingDate: String(row?.bookingDate ?? ''),
-          bookingTime: String(row?.bookingTime ?? ''),
-          totalCost: Number(row?.totalCost ?? 0),
+      const payload = await response.json();
+      const rows = unwrapServicesPayload(payload);
+      const normalized = rows
+        .map((row: any) => ({
+          bookingId: Number(row?.bookingId ?? row?.booking_id ?? row?.id ?? 0),
+          farmerId: Number(row?.farmerId ?? row?.farmer_id ?? 0),
+          providerId: readServiceProviderId(row),
+          serviceType: String(row?.serviceType ?? row?.service_type ?? ''),
+          bookingDate: String(row?.bookingDate ?? row?.booking_date ?? ''),
+          bookingTime: String(row?.bookingTime ?? row?.booking_time ?? ''),
+          totalCost: Number(row?.totalCost ?? row?.total_cost ?? 0),
           status: normalizeStatus(row?.status),
         }))
-        .filter((row) => row.bookingId > 0 && row.providerId === provider.id && row.serviceType.toUpperCase().includes(meta.serviceKey))
+        .filter(
+          (row) =>
+            row.bookingId > 0 &&
+            row.providerId === provider.id &&
+            bookingServiceMatchesMode(mode, row.serviceType)
+        )
         .sort((a, b) => b.bookingId - a.bookingId);
       setBookings(normalized);
     } catch (err) {

@@ -1,18 +1,23 @@
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { authOptions } from "../api/auth/[...nextauth]/route";
+import {
+  sessionIsFertilizerSupplier,
+  sessionIsHarvesterDriver,
+  sessionIsTractorDriver,
+} from "@/lib/keycloakRoleMatch";
 
 function getDashboardForRole(session: any): string {
-  const roles = ((session?.roles as string[] | undefined) ?? [])
+  const rawLower = ((session?.roles as string[] | undefined) ?? [])
     .concat((session?.user as any)?.role ? [(session.user as any).role] : [])
     .map((r: string) => (r || "").toLowerCase());
 
   // Priority: admin first so admin credentials always land in admin home.
-  if (roles.some((r) => r === "admin")) return "/admin";
-  if (roles.some((r) => r === "farmer")) return "/dashboards/farmers";
-  if (roles.some((r) => r === "tractor_driver" || r === "tractordriver")) return "/dashboards/tractor-drivers";
-  if (roles.some((r) => r === "harvester_driver" || r === "harvesterdriver")) return "/dashboards/harvester-drivers";
-  if (roles.some((r) => r === "fertilizer_supplier" || r === "fertilizersupplier")) return "/dashboards/fertilizer-suppliers";
+  if (rawLower.some((r) => r === "admin")) return "/admin";
+  if (rawLower.some((r) => r === "farmer")) return "/dashboards/farmers";
+  if (sessionIsTractorDriver(session)) return "/dashboards/tractor-drivers";
+  if (sessionIsHarvesterDriver(session)) return "/dashboards/harvester-drivers";
+  if (sessionIsFertilizerSupplier(session)) return "/dashboards/fertilizer-suppliers";
 
   // Fallback: if no roles in token, infer from identity string.
   const name = ((session?.user as any)?.name ?? "") as string;
